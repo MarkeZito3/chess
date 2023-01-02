@@ -44,6 +44,8 @@ class Peon(Piece):
     def valid_moves(self, board):
         moves = []
 
+        # No puse el movimiento "captura al paso" o "peón al paso" porque no se me ocurría cómo hacerlo xd, después veo
+
         # Obtener la dirección en la que se mueve el peón
         direction = 1 if self.color == "w" else -1
 
@@ -67,17 +69,15 @@ class Peon(Piece):
         return moves
 
 
-# K = King("b",3,0)
-
 board = [
 	["t", "c", "a", "q", "k", "a", "c", "t"],
 	["p", "p", "p", "p", "p", "p", "p", "p"],
-	[" ", "Q", " ", " ", " ", " ", " ", " "],
+	[" ", " ", " ", " ", " ", " ", "P", " "],
 	[" ", " ", " ", " ", " ", " ", " ", " "],
 	[" ", " ", " ", " ", " ", " ", " ", " "],
 	[" ", " ", " ", " ", " ", " ", " ", " "],
 	["P", "P", "P", "P", "P", "P", "P", "P"],
-	["T", "C", "A", " ", "K", "A", "C", "T"],
+	["T", "C", "A", "Q", "K", "A", "C", "T"],
 ]
 
 if __name__ == "__main__":
