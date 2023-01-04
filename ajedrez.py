@@ -1,5 +1,6 @@
-# Board
-import os
+""" 
+Pieces Classes
+"""
 
 class Piece:
     def __init__(self, color, row, col):
@@ -7,19 +8,111 @@ class Piece:
         self.row = row
         self.col = col
 
-    def valid_moves(self, board):
-        # Este método debe ser implementado por las clases hijas
-        pass
-
 class Queen(Piece):
     def __init__(self, color, row, col):
         super().__init__(color, row, col)
         self.symbol = "q" if self.color == "w" else "Q"
+        self.name = "Queen"
+
+    def valid_moves(self, board):
+        moves = []
+
+        # Comprobar si hay casillas vacías en las ocho posiciones que rodean al rey
+        for row_offset in [-1, 0, 1]:
+            for col_offset in [-1, 0, 1]:
+                if row_offset == 0 and col_offset == 0:
+                    continue  # No se puede mover al mismo lugar
+                row = self.row + row_offset
+                col = self.col + col_offset
+                if (row >= 0 and row <= 7) and (col >= 0 and col <= 7):  # Fuera del tablero
+                    while (board[row][col] == " " or board[row][col].color != self.color): # Si al rededor está vacío o hay una pieza de otro color
+                        moves.append((row, col))
+                        if board[row][col] != " ":
+                            break
+                        if row_offset == 0 and col_offset == 0:
+                            continue  # No se puede mover al mismo lugar
+                        row += row_offset
+                        col += col_offset
+                        if (row < 0 or row > 7) or (col < 0 or col > 7):  # Fuera del tablero
+                            break
+                    row = self.row
+                    col = self.col
+        return moves
+
+    def valid_moves_on_chess(self, board):
+        dict_row = {
+            0:8,
+            1:7,
+            2:6,
+            3:5,
+            4:4,
+            5:3,
+            6:2,
+            7:1
+        }
+        dict_col = {
+            0:"A",
+            1:"B",
+            2:"C",
+            3:"D",
+            4:"E",
+            5:"F",
+            6:"G",
+            7:"H",
+        }
+        new_board = []
+        for x in self.valid_moves(board):
+            new_board.append((dict_row[x[0]], dict_col[x[1]]))
+        return new_board
 
 class King(Piece):
     def __init__(self, color, row, col):
         super().__init__(color, row, col)
         self.symbol = "k" if self.color == "w" else "K"
+        self.name = "King"
+
+    def valid_moves(self, board):
+        moves = []
+
+        # Comprobar si hay casillas vacías en las ocho posiciones que rodean al rey
+        for row_offset in [-1, 0, 1]:
+            for col_offset in [-1, 0, 1]:
+                if row_offset == 0 and col_offset == 0:
+                    continue  # No se puede mover al mismo lugar
+                row = self.row + row_offset
+                col = self.col + col_offset
+                if row < 0 or row > 7 or col < 0 or col > 7:  # Fuera del tablero
+                    continue
+                if board[row][col] == " " or board[row][col].color != self.color: # Si al rededor está vacío o hay una pieza de otro color
+                    moves.append((row, col))
+
+        return moves
+
+    def valid_moves_on_chess(self, board):
+        dict_row = {
+            "0":8,
+            "1":7,
+            "2":6,
+            "3":5,
+            "4":4,
+            "5":3,
+            "6":2,
+            "7":1
+        }
+        dict_col = {
+            "0":"A",
+            "1":"B",
+            "2":"C",
+            "3":"D",
+            "4":"E",
+            "5":"F",
+            "6":"G",
+            "7":"H",
+        }
+        new_board = []
+        for x in self.valid_moves(board):
+            new_board.append((str(dict_row[x[0]]), str(dict_col[x[1]])))
+        return new_board
 
 class Torre(Piece):
     def __init__(self, color, row, col):
@@ -40,6 +133,7 @@ class Peon(Piece):
     def __init__(self, color, row, col):
         super().__init__(color, row, col)
         self.symbol = "p" if self.color == "w" else "P"
+        self.name = "Peon"
 
     def valid_moves(self, board):
         moves = []
@@ -68,11 +162,36 @@ class Peon(Piece):
 
         return moves
 
+    def valid_moves_on_chess(self, board):
+        dict_row = {
+            0:8,
+            1:7,
+            2:6,
+            3:5,
+            4:4,
+            5:3,
+            6:2,
+            7:1
+        }
+        dict_col = {
+            0:"A",
+            1:"B",
+            2:"C",
+            3:"D",
+            4:"E",
+            5:"F",
+            6:"G",
+            7:"H",
+        }
+        new_board = []
+        for x in self.valid_moves(board):
+            new_board.append((dict_row[x[0]], dict_col[x[1]]))
+        return new_board
 
 board = [
 	["t", "c", "a", "q", "k", "a", "c", "t"],
 	["p", "p", "p", "p", "p", "p", "p", "p"],
-	[" ", " ", " ", " ", " ", " ", "P", " "],
+	[" ", " ", " ", " ", " ", " ", " ", " "],
 	[" ", " ", " ", " ", " ", " ", " ", " "],
 	[" ", " ", " ", " ", " ", " ", " ", " "],
 	[" ", " ", " ", " ", " ", " ", " ", " "],

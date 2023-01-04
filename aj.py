@@ -30,8 +30,10 @@ def board_classes(board=list[list]):
 		>>> # Python console:
 		>>>
 		>>> board = [["K"],["k"]]
-		>>> board_classes(board=board)
-		[[<ajedrez.King object at 0x00000218A52658A0>], [<ajedrez.King object at 0x00000218A5265630>]]
+		>>> board_classes(board=board)[0]
+		<class 'ajedrez.King'>
+		>>> board_classes(board=board)[1]
+		<class 'ajedrez.King'>
 		```
 	"""
 
@@ -64,20 +66,36 @@ if __name__ == "__main__":
 	print("[X]║[A][B][C][D][E][F][G][H]")
 	print("========================================================")
 	# print(board)
-	print("1: ",Peon("w",1,0).valid_moves(board_classes(board)))
-	print("2: ",Peon("w",1,1).valid_moves(board_classes(board)))
-	print("3: ",Peon("w",1,2).valid_moves(board_classes(board)))
-	print("4: ",Peon("w",1,3).valid_moves(board_classes(board)))
-	print("5: ",Peon("w",1,4).valid_moves(board_classes(board)))
-	print("6: ",Peon("w",1,5).valid_moves(board_classes(board)))
-	print("7: ",Peon("w",1,6).valid_moves(board_classes(board)))
-	print("8: ",Peon("w",1,7).valid_moves(board_classes(board)))
+	# print("posibles movimientos par los Peones blancos:")
+	# print("1: ",Peon("w",1,0).valid_moves_on_chess(board_classes(board)))
+	# print("2: ",Peon("w",1,1).valid_moves_on_chess(board_classes(board)))
+	# print("3: ",Peon("w",1,2).valid_moves_on_chess(board_classes(board)))
+	# print("4: ",Peon("w",1,3).valid_moves_on_chess(board_classes(board)))
+	# print("5: ",Peon("w",1,4).valid_moves_on_chess(board_classes(board)))
+	# print("6: ",Peon("w",1,5).valid_moves_on_chess(board_classes(board)))
+	# print("7: ",Peon("w",1,6).valid_moves_on_chess(board_classes(board)))
+	# print("8: ",Peon("w",1,7).valid_moves_on_chess(board_classes(board)))
+	# print("========================================================")
+	# print("posibles movimientos par los Peones negros:")
+	# print("1: ",Peon("b",6,0).valid_moves_on_chess(board_classes(board)))
+	# print("2: ",Peon("b",6,1).valid_moves_on_chess(board_classes(board)))
+	# print("3: ",Peon("b",6,2).valid_moves_on_chess(board_classes(board)))
+	# print("4: ",Peon("b",6,3).valid_moves_on_chess(board_classes(board)))
+	# print("5: ",Peon("b",6,4).valid_moves_on_chess(board_classes(board)))
+	# print("6: ",Peon("b",6,5).valid_moves_on_chess(board_classes(board)))
+	# print("7: ",Peon("b",6,6).valid_moves_on_chess(board_classes(board)))
+	# print("8: ",Peon("b",6,7).valid_moves_on_chess(board_classes(board)))
+	# row = 0
+	row = 0
+	col = 3
+	try:
+		print(board_classes(board)[row][col].name, board_classes(board)[row][col].color,": ",board_classes(board)[row][col].valid_moves_on_chess(board_classes(board)))
+		print(len(board_classes(board)[row][col].valid_moves_on_chess(board_classes(board))))
+	except AttributeError as e:
+		print("========================================================")
+		print("Error, el espacio en blanco no tiene atributos")
+	
+	print(board_classes(board)[7][3].name, board_classes(board)[7][3].color,": ",board_classes(board)[7][3].valid_moves_on_chess(board_classes(board)))
 	print("========================================================")
-	print("1: ",Peon("b",6,0).valid_moves(board_classes(board)))
-	print("2: ",Peon("b",6,1).valid_moves(board_classes(board)))
-	print("3: ",Peon("b",6,2).valid_moves(board_classes(board)))
-	print("4: ",Peon("b",6,3).valid_moves(board_classes(board)))
-	print("5: ",Peon("b",6,4).valid_moves(board_classes(board)))
-	print("6: ",Peon("b",6,5).valid_moves(board_classes(board)))
-	print("7: ",Peon("b",6,6).valid_moves(board_classes(board)))
-	print("8: ",Peon("b",6,7).valid_moves(board_classes(board)))
+	# print("Reina Blanca:",board_classes(board)[0][3].name)
+	# print(type(board_classes(board)[0][3]))
