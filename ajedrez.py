@@ -118,6 +118,57 @@ class Torre(Piece):
     def __init__(self, color, row, col):
         super().__init__(color, row, col)
         self.symbol = "t" if self.color == "w" else "T"
+        self.name = "Torre"
+
+    def valid_moves(self, board):
+        moves = []
+
+        for row_offset in [-1, 0, 1]:
+            for col_offset in [-1, 0, 1]:
+                if row_offset == 0 and col_offset == 0:
+                    continue  # No se puede mover al mismo lugar
+                if row_offset != 0 and col_offset != 0: # Cualquiera de los dos debe ser 0 para que siga el camino vertical u horizontal
+                    continue
+                row = self.row + row_offset
+                col = self.col + col_offset
+                if (row >= 0 and row <= 7) and (col >= 0 and col <= 7):
+                    while board[row][col] == " " or board[row][col].color != self.color:
+                        moves.append((row, col))
+                        if board[row][col] != " ":
+                            break
+                        row += row_offset
+                        col += col_offset
+                        if (row < 0 or row > 7) or (col < 0 or col > 7):
+                            break
+                    row = self.row
+                    col = self.col
+        return moves
+
+    def valid_moves_on_chess(self, board):
+        dict_row = {
+            0:8,
+            1:7,
+            2:6,
+            3:5,
+            4:4,
+            5:3,
+            6:2,
+            7:1
+        }
+        dict_col = {
+            0:"A",
+            1:"B",
+            2:"C",
+            3:"D",
+            4:"E",
+            5:"F",
+            6:"G",
+            7:"H",
+        }
+        new_board = []
+        for x in self.valid_moves(board):
+            new_board.append((dict_row[x[0]], dict_col[x[1]]))
+        return new_board
 
 class Caballo(Piece):
     def __init__(self, color, row, col):
@@ -128,6 +179,54 @@ class Alfil(Piece):
     def __init__(self, color, row, col):
         super().__init__(color, row, col)
         self.symbol = "a" if self.color == "w" else "A"
+        self.name = "Alfil"
+
+    def valid_moves(self, board):
+        moves = []
+
+        for row_offset in [-1,1]:
+            for col_offset in [-1,1]:
+                row = self.row + row_offset
+                col = self.col + col_offset
+                if (row >=0 and row <=7) and (col >= 0 and col<= 7):
+                    while board[row][col] == " " or board[row][col].color != self.color:
+                        moves.append((row,col))
+                        if board[row][col] != " ": # Para que no siga avanzando si ya comió a una pieza enemiga
+                            break
+                        row += row_offset
+                        col += col_offset
+                        if (row < 0 or row > 7) or (col < 0 or col > 7):
+                            break
+                row = self.row
+                col = self.col
+        return moves
+
+    def valid_moves_on_chess(self, board):
+        dict_row = {
+            0:8,
+            1:7,
+            2:6,
+            3:5,
+            4:4,
+            5:3,
+            6:2,
+            7:1
+        }
+        dict_col = {
+            0:"A",
+            1:"B",
+            2:"C",
+            3:"D",
+            4:"E",
+            5:"F",
+            6:"G",
+            7:"H",
+        }
+        new_board = []
+        for x in self.valid_moves(board):
+            new_board.append((dict_row[x[0]], dict_col[x[1]]))
+        return new_board
+
 
 class Peon(Piece):
     def __init__(self, color, row, col):

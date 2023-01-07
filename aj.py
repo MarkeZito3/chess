@@ -86,16 +86,15 @@ if __name__ == "__main__":
 	# print("7: ",Peon("b",6,6).valid_moves_on_chess(board_classes(board)))
 	# print("8: ",Peon("b",6,7).valid_moves_on_chess(board_classes(board)))
 	# row = 0
-	row = 0
+	row = 3
 	col = 3
 	try:
 		print(board_classes(board)[row][col].name, board_classes(board)[row][col].color,": ",board_classes(board)[row][col].valid_moves_on_chess(board_classes(board)))
 		print(len(board_classes(board)[row][col].valid_moves_on_chess(board_classes(board))))
 	except AttributeError as e:
 		print("========================================================")
-		print("Error, el espacio en blanco no tiene atributos")
+		print("Error, el Empty Space no tiene atributos como .color")
 	
-	print(board_classes(board)[7][3].name, board_classes(board)[7][3].color,": ",board_classes(board)[7][3].valid_moves_on_chess(board_classes(board)))
 	print("========================================================")
-	# print("Reina Blanca:",board_classes(board)[0][3].name)
-	# print(type(board_classes(board)[0][3]))
+	# print(board_classes(board)[7][3].name, board_classes(board)[7][3].color,": ",board_classes(board)[7][3].valid_moves_on_chess(board_classes(board)))
+	
